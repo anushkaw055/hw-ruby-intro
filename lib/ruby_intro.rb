@@ -3,23 +3,11 @@
 # Part 1
 
 def sum arr
-  sum=0
-  arr.each{|x| sum+=x}
-  return sum
-  
+  arr.inject(0,:+)
 end
 
 def max_2_sum arr
-  sum=0
-  if arr.length == 0
-    sum=0
-  elsif arr.length == 1
-    sum=arr[0]
-  else
-    arr = arr.sort { |a,b| b <=> a}
-    sum = arr[0] + arr[1]
-  end
-  return sum
+  arr.max(2).reduce(0,:+)
 end
 
 def sum_to_n? arr, n
@@ -34,7 +22,8 @@ end
 # Part 2
 
 def hello(name)
-  return "Hello, "+ name
+  a="Hello, "
+  a << name
 end
 
 def starts_with_consonant? s
@@ -62,18 +51,15 @@ end
 # Part 3
 
 class BookInStock
+  attr_accessor:isbn
+  attr_accessor:price
   def initialize(isbn,price)
-    @isbn = isbn
+    raise ArgumentError,
+      "Bad arguments" if isbn.empty? or price <= 0
+    @isbn =isbn
     @price = price
-    if isbn.length==0 or price<=0
-      raise ArgumentError
-    end
   end
-  
-  attr_accessor :isbn
-  attr_accessor :price
-  
   def price_as_string
-    return "$%.2f" % price
+    sprintf("$%2.2f",@price)
   end
 end
